@@ -11,25 +11,21 @@
  */
 class Solution {
 public:
-    void pre(TreeNode* root, vector<int>&ans){
+    void f(TreeNode* root, vector<int> &arr){
         if(root==NULL) return;
-        ans.push_back(root->val);
-        pre(root->left,ans);
-        pre(root->right,ans);
+        arr.push_back(root->val);
+        f(root->left,arr);
+        f(root->right,arr);
     }
     bool findTarget(TreeNode* root, int k) {
-        vector<int>ans;
-        pre(root,ans);
-        int s=0;
-        int size=ans.size();
-        int e=size-1;
-        int sum=0;
-        sort(ans.begin(), ans.end());
-        while(e>s){
-            sum=ans[s]+ans[e];
-            if(sum==k) return true;
-            if(sum>k) e--;
-            if(sum<k) s++;
+        vector<int> arr;
+        f(root,arr);
+        for(int i=0;i<arr.size();i++){
+            for(int j=i+1;j<arr.size();j++){
+                if(arr[i]+arr[j]==k){
+                    return true;
+                }
+            }
         }
         return false;
     }
